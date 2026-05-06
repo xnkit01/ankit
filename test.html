@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankit Sharma | Cybersecurity Researcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #a855f7;
+            --whatsapp: #25D366;
+        }
+
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+            background-color: #ffffff; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .quote-font { font-family: 'Playfair Display', serif; }
+        .mono-font { font-family: 'Fira Code', monospace; }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Improved Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes heroIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        
+        .hero-animate {
+            opacity: 0;
+            animation: heroIn 1.2s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .typing-container::after {
+            content: "|";
+            animation: blink 1s infinite;
+            color: var(--primary);
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .project-card { 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            background: white; 
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 30px 60px -12px rgba(99, 102, 241, 0.15);
+        }
+
+        .tool-card { 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            border: 1px solid #f4f4f5; 
+            background: #fff; 
+        }
+        
+        .tool-card:hover { 
+            border-color: var(--primary); 
+            transform: translateY(-5px);
+            background: #fdfdff;
+        }
+
+        .tool-card.active-tool {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .tool-card.active-tool i { color: white !important; }
+
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            z-index: 2;
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .hover-whatsapp:hover {
+            background-color: var(--whatsapp) !important;
+            color: white !important;
+            border-color: var(--whatsapp) !important;
+        }
+        .hover-whatsapp:hover i {
+            color: white !important;
+        }
+
+        /* Consistent Quote/Shayari Card Styling */
+        .verse-card {
+            background: white;
+            border: 1px solid #f1f1f1;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+        }
+        .verse-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.1);
+        }
+        .verse-card:hover .verse-icon {
+            color: var(--primary) !important;
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .verse-icon {
+            transition: all 0.4s ease;
+        }
+    </style>
+</head>
+<body class="text-zinc-900 selection:bg-indigo-100 selection:text-indigo-700">
+
+    <!-- Header / Nav -->
+    <nav class="fixed top-0 w-full z-50 nav-glass border-b border-zinc-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="mono-font font-bold text-xl tracking-tighter typing-container">
+                <span id="nav-name" class="text-zinc-900">ankit.</span><span id="nav-suffix" class="text-indigo-600">portfolio</span>
+            </div>
+            <div class="hidden md:flex items-center gap-10 text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">
+                <a href="#about" class="hover:text-indigo-600 transition-colors">Identity</a>
+                <a href="#skills" class="hover:text-indigo-600 transition-colors">Arsenal</a>
+                <a href="#experience" class="hover:text-indigo-600 transition-colors">Journey</a>
+                <a href="#projects" class="hover:text-indigo-600 transition-colors">Work</a>
+                <a href="#quotes" class="hover:text-indigo-600 transition-colors">Verses</a>
+            </div>
+            <a href="assets/ankit.pdf" target="_blank" rel="noopener noreferrer" class="bg-zinc-900 text-white px-7 py-3 rounded-full text-[10px] font-black hover:bg-indigo-600 transition-all active:scale-95 shadow-lg uppercase tracking-widest text-center inline-block">
+                View Resume
+            </a>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <header id="about" class="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 w-full">
+                <div class="hero-animate grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                    <div class="lg:col-span-8 lg:pr-8"> 
+                        <div class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-8">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            Cybersecurity Researcher & Auditor
+                        </div>
+                        
+                        <h1 class="text-7xl md:text-8xl lg:text-[9.5rem] font-extrabold tracking-tighter leading-[0.85] mb-10">
+                            Ankit <br><span class="text-gradient">Sharma.</span>
+                        </h1>
+
+                        <div class="space-y-8 max-w-2xl">
+                            <p class="text-2xl md:text-3xl text-zinc-500 leading-relaxed font-light italic quote-font">
+                                "Finding logic in chaos, and humanity in digital silence."
+                            </p>
+                            <p class="text-zinc-400 text-lg leading-relaxed max-w-lg">
+                                Specializing in offensive security, vulnerability assessment, and infrastructure hardening. I build defensive architectures that think like advanced persistent threats.
+                            </p>
+                            
+                            <div class="pt-8 flex flex-wrap gap-10 items-center">
+                                <div class="flex -space-x-4">
+                                    <div class="w-14 h-14 rounded-full border-4 border-white bg-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-xl">AS</div>
+                                    <div class="w-14 h-14 rounded-full border-4 border-white bg-zinc-900 flex items-center justify-center text-white text-lg shadow-xl"><i data-lucide="lock" class="w-5 h-5"></i></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 flex flex-col items-center lg:items-end">
+                        <div class="relative w-full lg:w-80 aspect-[4/5] overflow-hidden rounded-[3rem] shadow-2xl group cursor-crosshair lg:-mt-12">
+                            <img src="assets/Ankit.webp?auto=format&fit=crop&q=80&w=800" 
+                                alt="Ankit Sharma" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100">
+                            <div class="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-xl p-5 rounded-3xl border border-white/50 shadow-2xl">
+                                <p class="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400 mb-1">Status</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                    <p class="text-xs font-black text-zinc-900 uppercase">Available for Audit</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Arsenal Section -->
+        <section id="skills" class="py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-24 items-center">
+                    <div class="reveal">
+                        <span class="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em]">Tools of Trade</span>
+                        <h3 class="text-5xl md:text-6xl font-extrabold mt-6 mb-10 tracking-tighter leading-tight">The Pentester's <br>Workbench.</h3>
+                        
+                        <div id="tool-info-card" class="bg-zinc-900 text-white p-12 rounded-[3.5rem] shadow-3xl transition-all duration-700 min-h-[300px] flex flex-col justify-center">
+                            <div id="tool-tag" class="inline-block bg-indigo-600 px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest mb-8 w-fit">Generalist</div>
+                            <h4 id="tool-name" class="text-4xl font-bold mb-6">Select a Module</h4>
+                            <p id="tool-desc" class="text-zinc-400 leading-relaxed text-xl font-light">Explore my technical proficiency and real-world application experience across the offensive security lifecycle.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 reveal">
+                        <div onclick="showTool(this, 'Nmap', 'Advanced network discovery, service enumeration, and security auditing using custom NSE scripts for footprinting.', 'Network')" class="tool-card p-10 rounded-[3rem] flex flex-col items-center gap-6">
+                            <i data-lucide="radar" class="w-8 h-8 text-indigo-600"></i>
+                            <span class="font-black text-[10px] uppercase tracking-widest">Nmap</span>
+                        </div>
+                        <div onclick="showTool(this, 'Burp Suite', 'Specialized in automated and manual web application security testing, interception, and business logic analysis.', 'WebSec')" class="tool-card p-10 rounded-[3rem] flex flex-col items-center gap-6">
+                            <i data-lucide="bug" class="w-8 h-8 text-indigo-600"></i>
+                            <span class="font-black text-[10px] uppercase tracking-widest">BurpSuite</span>
+                        </div>
+                        <div onclick="showTool(this, 'Wireshark', 'Deep packet inspection (DPI) and protocol analysis for forensic investigation and exfiltration detection.', 'Analysis')" class="tool-card p-10 rounded-[3rem] flex flex-col items-center gap-6">
+                            <i data-lucide="activity" class="w-8 h-8 text-indigo-600"></i>
+                            <span class="font-black text-[10px] uppercase tracking-widest">Wireshark</span>
+                        </div>
+                        <div onclick="showTool(this, 'Metasploit', 'Framework-driven exploitation, custom payload development, and post-exploitation privilege escalation.', 'Offensive')" class="tool-card p-10 rounded-[3rem] flex flex-col items-center gap-6">
+                            <i data-lucide="terminal" class="w-8 h-8 text-indigo-600"></i>
+                            <span class="font-black text-[10px] uppercase tracking-widest">Metasploit</span>
+                        </div>
+                        <div onclick="showTool(this, 'Hydra', 'Parallelized login cracker for validating password policies and identifying weak authentication vectors.', 'Cracking')" class="tool-card p-10 rounded-[3rem] flex flex-col items-center gap-6">
+                            <i data-lucide="key" class="w-8 h-8 text-indigo-600"></i>
+                            <span class="font-black text-[10px] uppercase tracking-widest">Hydra</span>
+                        </div>
+                        <div onclick="showTool(this, 'Splunk', 'Enterprise SIEM management for real-time monitoring, correlation of security events, and incident response.', 'SOC')" class="tool-card p-10 rounded-[3rem] flex flex-col items-center gap-6">
+                            <i data-lucide="search" class="w-8 h-8 text-indigo-600"></i>
+                            <span class="font-black text-[10px] uppercase tracking-widest">Splunk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="py-32 bg-zinc-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-24">
+                    <div class="reveal">
+                        <h3 class="text-4xl font-black mb-16 tracking-tight flex items-center gap-4">
+                            <i data-lucide="briefcase" class="text-indigo-600"></i>
+                            Professional Path
+                        </h3>
+                        <div class="ml-10 border-l-2 border-zinc-200 pl-10 space-y-16">
+                            <div class="relative timeline-dot">
+                                <p class="text-indigo-600 font-black text-[10px] uppercase tracking-[0.2em] mb-2">Sep 2024 — Jan 2025</p>
+                                <h4 class="text-2xl font-bold text-zinc-900">Web Developer Intern</h4>
+                                <p class="text-zinc-500 mt-4 leading-relaxed text-lg">I directed a cross-functional team of over 10 members in the development of a dynamic web application, prioritizing a "security-first" architecture from the ground up. By integrating rigorous authentication protocols and thorough input validation, I ensured the platform’s technical integrity while simultaneously spearheading an SEO strategy that successfully boosted search visibility by 10%. This dual focus allowed for a high-performing user experience that was as discoverable as it was secure.</p>
+                            </div>
+                            <div class="relative timeline-dot">
+                                <p class="text-indigo-600 font-black text-[10px] uppercase tracking-[0.2em] mb-2">Aug 2024 — Sep 2024</p>
+                                <h4 class="text-2xl font-bold text-zinc-900">Python Developer Intern</h4>
+                                <p class="text-zinc-500 mt-4 leading-relaxed text-lg">Developed a bespoke To-Do List application that integrated custom-built modules for enhanced functionality. I worked in a collaborative environment to refine the user experience, focusing on UI fluidity and the elimination of technical debt through rigorous bug fixing. My development workflow was anchored in industry-standard practices, including disciplined version control and a security-first approach to coding, ensuring the final product was both stable and resilient.</p>      
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 200ms">
+                        <h3 class="text-4xl font-black mb-16 tracking-tight flex items-center gap-4">
+                            <i data-lucide="graduation-cap" class="text-indigo-600"></i>
+                            Academic Foundation
+                        </h3>
+                        <div class="ml-10 border-l-2 border-zinc-200 pl-10 space-y-16">
+                            <div class="relative timeline-dot">
+                                <p class="text-indigo-600 font-black text-[10px] uppercase tracking-[0.2em] mb-2">2020 — 2024</p>
+                                <h4 class="text-2xl font-bold text-zinc-900">Bachelor of Computer Applications</h4>
+                                <p class="text-zinc-500 mt-4 leading-relaxed text-lg">Focused on Information Security, Cryptography, and Advanced Network Management. Graduated with Honors in Cyber Research.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
+                    <div>
+                        <span class="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em]">Portfolio Labs</span>
+                        <h2 class="text-6xl font-extrabold mt-6 tracking-tighter">Security Projects.</h2>
+                    </div>
+                    <p class="text-zinc-400 max-w-sm mt-8 md:mt-0 text-lg">Open-source contributions and private research labs focusing on security automation and threat intelligence.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div class="project-card reveal p-12 rounded-[3.5rem] relative overflow-hidden group">
+                        <div class="absolute top-8 right-8 flex items-center gap-2 bg-green-50 text-green-600 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border border-green-100">
+                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                            Live
+                        </div>
+                        <i data-lucide="shield-check" class="w-12 h-12 text-indigo-600 mb-8"></i>
+                        <h4 class="text-3xl font-bold mb-5">Auth-Sentinel</h4>
+                        <p class="text-zinc-500 text-lg leading-relaxed mb-12">A real-time behavioral detection engine for preventing session hijacking in distributed web apps.</p>
+                        <div class="flex gap-3"><span class="mono-font text-[10px] font-black bg-zinc-100 px-4 py-2 rounded-xl text-zinc-600 border border-zinc-200 uppercase">Python / JWT</span></div>
+                    </div>
+                    
+                    <div class="project-card reveal p-12 rounded-[3.5rem] relative overflow-hidden group" style="transition-delay: 150ms">
+                        <div class="absolute top-8 right-8 flex items-center gap-2 bg-amber-50 text-amber-600 px-4 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border border-amber-100">
+                            Soon
+                        </div>
+                        <i data-lucide="cpu" class="w-12 h-12 text-indigo-600 mb-8"></i>
+                        <h4 class="text-3xl font-bold mb-5">Kernel-Harden</h4>
+                        <p class="text-zinc-500 text-lg leading-relaxed mb-12">Automated CIS benchmark script designed for hardening production-grade Linux kernel parameters.</p>
+                        <div class="flex gap-3"><span class="mono-font text-[10px] font-black bg-zinc-100 px-4 py-2 rounded-xl text-zinc-600 border border-zinc-200 uppercase">Shell / Linux</span></div>
+                    </div>
+
+                    <div class="project-card reveal p-12 rounded-[3.5rem] relative overflow-hidden group" style="transition-delay: 300ms">
+                        <div class="absolute top-8 right-8 flex items-center gap-2 bg-amber-50 text-amber-600 px-4 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border border-amber-100">
+                            Soon
+                        </div>
+                        <i data-lucide="workflow" class="w-12 h-12 text-indigo-600 mb-8"></i>
+                        <h4 class="text-3xl font-bold mb-5">Scan-Orchestra</h4>
+                        <p class="text-zinc-500 text-lg leading-relaxed mb-12">Scalable scanning coordinator that distributes Nmap loads across multiple worker subnets.</p>
+                        <div class="flex gap-3"><span class="mono-font text-[10px] font-black bg-zinc-100 px-4 py-2 rounded-xl text-zinc-600 border border-zinc-200 uppercase">Go / React</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quotes & Shayari Section -->
+        <section id="quotes" class="py-32 bg-zinc-50 border-t border-zinc-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20 reveal">
+                    <span class="text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em]">Personal Space</span>
+                    <h2 class="text-6xl font-extrabold mt-6 tracking-tighter">Thoughts & Verses.</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <!-- Professional Quote -->
+                    <div class="reveal verse-card p-12 rounded-[3.5rem] group">
+                        <i data-lucide="quote" class="w-10 h-10 text-indigo-100 mb-8 verse-icon"></i>
+                        <p class="text-3xl quote-font italic leading-relaxed text-zinc-800">
+                            "In the world of zero-day exploits, the only constant is the human factor. Secure the mind, and the machine follows."
+                        </p>
+                        <div class="mt-10 h-px w-12 bg-indigo-600 group-hover:w-20 transition-all duration-500"></div>
+                        <p class="mt-6 text-[10px] font-black uppercase tracking-widest text-zinc-400">Security Philosophy</p>
+                    </div>
+
+                    <!-- Shayari Card 1 -->
+                    <div class="reveal verse-card p-12 rounded-[3.5rem] group" style="transition-delay: 200ms">
+                        <i data-lucide="pen-tool" class="w-10 h-10 text-indigo-100 mb-8 verse-icon"></i>
+                        <div class="space-y-4">
+                            <p class="text-2xl quote-font text-zinc-700 leading-snug">
+                                उलझनों के जाल में भी रास्ता निकाल लेता हूँ, <br>
+                                मैं ज़रा सी रौशनी से सारा घर सजा लेता हूँ।
+                            </p>
+                            <p class="text-2xl quote-font text-zinc-700 leading-snug">
+                                वो कहते हैं कि मंज़िल बहुत दूर है मेरी, <br>
+                                मैं मुस्कुरा कर खुद को मंज़िल बना लेता हूँ।
+                            </p>
+                        </div>
+                        <div class="mt-10 h-px w-12 bg-indigo-600 group-hover:w-20 transition-all duration-500"></div>
+                        <p class="mt-6 text-[10px] font-black uppercase tracking-widest text-zinc-400">Dil ki Kalam Se</p>
+                    </div>
+
+                    <!-- Life Quote -->
+                    <div class="reveal verse-card p-12 rounded-[3.5rem] group" style="transition-delay: 300ms">
+                        <i data-lucide="heart" class="w-10 h-10 text-indigo-100 mb-8 verse-icon"></i>
+                        <p class="text-3xl quote-font italic leading-relaxed text-zinc-800">
+                            "Integrity is doing the right thing when the connection is encrypted and no one is watching."
+                        </p>
+                        <div class="mt-10 h-px w-12 bg-indigo-600 group-hover:w-20 transition-all duration-500"></div>
+                        <p class="mt-6 text-[10px] font-black uppercase tracking-widest text-zinc-400">Code of Honor</p>
+                    </div>
+
+                    <!-- Shayari Card 2 -->
+                    <div class="reveal verse-card p-12 rounded-[3.5rem] group" style="transition-delay: 400ms">
+                        <i data-lucide="feather" class="w-10 h-10 text-indigo-100 mb-8 verse-icon"></i>
+                        <div class="space-y-4">
+                            <p class="text-2xl quote-font text-zinc-700 leading-snug">
+                                ज़माना लाख बदले मगर तुम ना बदलना, <br>
+                                किरदार ऐसा रखो कि आइना भी तुम्हें सलाम करे।
+                            </p>
+                        </div>
+                        <div class="mt-10 h-px w-12 bg-indigo-600 group-hover:w-20 transition-all duration-500"></div>
+                        <p class="mt-6 text-[10px] font-black uppercase tracking-widest text-zinc-400">Ehsaas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Socials -->
+        <section id="socials" class="py-32 bg-zinc-900 text-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-24 reveal">
+                    <h2 class="text-6xl font-extrabold tracking-tighter mb-6">Digital Footprint</h2>
+                    <p class="text-zinc-400 text-xl font-light max-w-xl mx-auto italic">"Where code meets ethics and passion meets protection."</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
+                    <a href="https://www.linkedin.com/in/xnkit01" class="group p-10 bg-white/5 rounded-[3rem] flex flex-col items-center gap-6 hover:bg-indigo-600 transition-all duration-500 hover:-translate-y-2">
+                        <svg viewBox="0 0 24 24" class="w-10 h-10 fill-current group-hover:scale-110 transition-transform">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100">LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/xnkit01" class="group p-10 bg-white/5 rounded-[3rem] flex flex-col items-center gap-6 hover:bg-zinc-800 transition-all duration-500 hover:-translate-y-2">
+                        <svg viewBox="0 0 24 24" class="w-10 h-10 fill-current group-hover:scale-110 transition-transform">
+                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                        </svg>
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100">GitHub</span>
+                    </a>
+                    <a href="https://bugcrowd.com/xnkit01" class="group p-10 bg-white/5 rounded-[3rem] flex flex-col items-center gap-6 hover:bg-orange-600 transition-all duration-500 hover:-translate-y-2">
+                        <i data-lucide="target" class="w-10 h-10 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100">Bugcrowd</span>
+                    </a>
+                    <a href="https://hackerone.com/xnkit01?type=user" class="group p-10 bg-white/5 rounded-[3rem] flex flex-col items-center gap-6 hover:bg-red-600 transition-all duration-500 hover:-translate-y-2">
+                        <i data-lucide="shield" class="w-10 h-10 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100">HackerOne</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-32 bg-white mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-5xl font-black mb-14 tracking-tighter">Contact me</h2>
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center mb-24">
+                <a href="mailto:ankit.infosec@zohomail.com" class="bg-zinc-900 text-white px-12 py-6 rounded-3xl text-lg font-bold hover:bg-indigo-600 transition-all shadow-2xl active:scale-95 flex items-center gap-4">
+                    <i data-lucide="mail" class="w-6 h-6"></i>
+                    ankit.infosec@zohomail.com
+                </a>
+                <a href="https://wa.me/918368251419" class="hover-whatsapp border-2 border-zinc-100 px-12 py-6 rounded-3xl text-lg font-bold transition-all flex items-center gap-4 group">
+                    <i data-lucide="message-circle" class="w-6 h-6 text-green-500 transition-colors"></i>
+                    WhatsApp 
+                </a>
+            </div>
+            <div class="flex flex-col items-center gap-8">
+                <div class="h-px w-24 bg-zinc-200"></div>
+                <p class="text-[11px] text-zinc-400 font-black uppercase tracking-[0.5em]">Ankit Sharma &copy; 2026 &bull; Security First</p>
+                <p class="text-zinc-400 text-sm mt-2">All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on initial load
+
+        // Tools Interaction
+        function showTool(element, name, desc, tag) {
+            document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active-tool'));
+            element.classList.add('active-tool');
+            
+            document.getElementById('tool-name').innerText = name;
+            document.getElementById('tool-desc').innerText = desc;
+            document.getElementById('tool-tag').innerText = tag;
+        }
+    </script>
+</body>
+</html>
