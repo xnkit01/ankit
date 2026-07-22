@@ -4,7 +4,7 @@ Professional portfolio and security research hub. This site serves as a centrali
 
 ## 🌐 Live Portfolio
 
-**[xnkit01.github.io](https://xnkit01.github.io/)**
+**[xnkit01.github.io](https://xnkit-sec.github.io/)**
 
 ---
 
